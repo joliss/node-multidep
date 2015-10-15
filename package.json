@@ -1,7 +1,7 @@
 {
   "name": "multidep",
   "description": "Install and require multiple versions of the same npm package for testing",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Jo Liss <joliss42@gmail.com>",
   "repository": {
     "type": "git",
