@@ -2,7 +2,7 @@
 
 var fs = require('fs')
 var path = require('path')
-var childProcess = require('child_process')
+var spawn = require('spawn-cmd').spawn
 var RSVP = require('rsvp')
 var rimraf = require('rimraf')
 
@@ -54,7 +54,7 @@ module.exports.install = function(specPath) {
               console.log(packageName + ' ' + version + ': Installing')
               fs.mkdirSync(packagePath)
               fs.mkdirSync(path.join(packagePath, 'node_modules'))
-              var cp = childProcess.spawn('npm', ['install', packageName + '@' + version], {
+              var cp = spawn('npm', ['install', packageName + '@' + version], {
                 cwd: packagePath,
                 stdio: 'inherit',
                 timeout: 300
