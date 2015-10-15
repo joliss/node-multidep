@@ -30,9 +30,14 @@ Do not use fuzzy versions (`"^0.16.0"`) - this will cause problems.
 
 ### Installing the packages from npm
 
-Next, run `multidep test/multidep.json`. In this example, it will create
-`test/multidep` and install broccoli 0.16.3 and broccoli 1.0.0 somewhere
-inside the `test/multidep` directory.
+Next, run
+
+```bash
+./node_modules/.bin/multidep test/multidep.json
+```
+
+In this example, it will create `test/multidep` and install broccoli 0.16.3
+and broccoli 1.0.0 somewhere inside the `test/multidep` directory.
 
 To run `multidep` automatically before `npm test`, add it as a "pretest"
 command to your `package.json`:
