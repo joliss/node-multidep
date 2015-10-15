@@ -1,6 +1,6 @@
 # node-multidep
 
-Install multiple versions of a package via npm.
+Install and `require` multiple versions of a package via npm.
 
 This is useful for integration testing. It's perhaps not robust enough for
 production code.
