@@ -33,7 +33,32 @@ module.exports = function multidep(specPath) {
       packages[packageName]['master'] = function() { return null }
     }
   })
-  return packages
+
+  function multidepRequire(packageName, version) {
+    if (packages[packageName] == null) {
+      throw new Error("Package '" + packageName + "' not found in " + specPath)
+    }
+    var versions = packages[packageName]
+    if (versions[version] == null) {
+      if (version === 'master') {
+        return null
+      } else {
+        throw new Error("Version " + version + " of package '" + packageName + "' not found in " + specPath)
+      }
+    }
+    return versions[version]()
+  }
+
+  multidepRequire.forEachVersion = function forEachVersion(packageName, cb) {
+    if (packages[packageName] == null) {
+      throw new Error("Package '" + packageName + "' not found in " + specPath)
+    }
+    packages[packageName].forEachVersion(cb)
+  }
+
+  multidepRequire.packages = packages
+
+  return multidepRequire
 }
 
 module.exports.install = function(specPath) {

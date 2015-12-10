@@ -39,13 +39,13 @@ Next, run
 In this example, it will create `test/multidep` and install broccoli 0.16.3
 and broccoli 1.0.0 somewhere inside the `test/multidep` directory.
 
-To run `multidep` automatically before `npm test`, add it as a "pretest"
-command to your `package.json`:
+To run `multidep` automatically after `npm install`, add it as a "postinstall"
+hook to your `package.json`:
 
 ```json
 {
   "scripts": {
-    "pretest": "multidep test/multidep.json",
+    "postinstall": "multidep test/multidep.json",
     "test": "..."
   }
 }
@@ -54,54 +54,51 @@ command to your `package.json`:
 `multidep` will not redownload existing packages. If something went wrong,
 delete its directory first: `rm -r test/multidep`
 
-### Accessing specific package versions
+### `multidepRequire`: Requiring specific package versions
 
-In your integration test, access the different versions like so:
+You can now require the different versions like so:
 
 ```js
-var multidepPackages = require('multidep')('test/multidep.json')
+var multidepRequire = require('multidep')('test/multidep.json');
 
-var broccoli_0_16_3 = multidepPackages['broccoli']['0.16.3']()
-var broccoli_1_0_0 = multidepPackages['broccoli']['1.0.0']()
+var broccoli0 = multidepRequire('broccoli', '0.16.3');
+var broccoli1 = multidepRequire('broccoli', '1.0.0');
 ```
 
-Note the trailing `()` - this is needed to `require` the module.
-
-### Iterating over all versions of a package
+### `multidepRequire.forEachVersion`: Iterating over all versions
 
 To iterate over each version, use the `.forEachVersion` helper method.
 
 ```js
-multidepPackages['broccoli'].forEachVersion(function(version, broccoli) {
+multidepRequire.forEachVersion('broccoli', function(version, broccoli) {
   // Do stuff with the `broccoli` module
-})
+});
 ```
 
 ### Testing against the master branch
 
-Sometimes it's useful to test against your local checkout of a package. To do
-so, symlink it to `<path>/<package-name>-master`, e.g.
+Sometimes it's useful to test against your local checkout of a package. To
+facility this, there is a special `'master'` version for each package whose
+presence is detected automatically, without being specified in
+`multidep.json`.
+
+First, symlink your checkout to `<path>/<package>-master`, e.g.
 
 ```bash
 ln -s ~/src/broccoli test/multidep/broccoli-master
 ```
 
-You do not need to list this "master" version in your `multidep.json`.
-`multidep` will detect its presence at runtime.
+Then, try to `require` it. If it's not present (for example on a CI server),
+you will get `null`, rather than an exception:
 
 ```js
-var multidepPackages = require('multidep')('test/multidep.json')
+var multidepRequire = require('multidep')('test/multidep.json');
 
-var broccoli_master = multidepPackages['broccoli']['master']()
-if (broccoli_master !== null) {
-  ...
+var broccoliMaster = multidepRequire('broccoli', 'master');
+if (broccoliMaster !== null) {
+  // Do stuff
 }
-
-// Or:
-multidepPackages['broccoli'].forEachVersion(function(version, broccoli) {
-  // If broccoli-master is present, this loop will have an extra iteration
-  // at the end with version === 'master'
-})
 ```
 
-This only works for "master", not for arbitrary versions.
+The `multidepRequire.forEachVersion` function also includes the `'master'`
+version automatically when it's present.

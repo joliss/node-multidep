@@ -1,5 +1,7 @@
 # master
 
+* Clearer API: We now use a `multidepRequire` function, similar to `require`
+
 # 1.0.1
 
 * Use spawn-cmd to fix Windows compatibility
