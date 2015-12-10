@@ -1,5 +1,7 @@
 # master
 
+# 2.0.0
+
 * Clearer API: We now use a `multidepRequire` function, similar to `require`
 
 # 1.0.1
