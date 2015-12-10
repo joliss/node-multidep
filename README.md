@@ -1,6 +1,11 @@
 # node-multidep
 
-Install and `require` multiple versions of a package via npm.
+Install and `require` multiple versions of a package via npm, like so:
+
+```js
+var broccoli0 = multidepRequire('broccoli', '0.16.3');
+var broccoli1 = multidepRequire('broccoli', '1.0.0');
+```
 
 This is useful for integration testing. It's perhaps not robust enough for
 production code.
