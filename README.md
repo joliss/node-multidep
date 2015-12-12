@@ -70,6 +70,9 @@ var broccoli0 = multidepRequire('broccoli', '0.16.3');
 var broccoli1 = multidepRequire('broccoli', '1.0.0');
 ```
 
+Note that `test/multidep.json` is relative to the current working directory.
+This is typically your project root.
+
 ### `multidepRequire.forEachVersion`: Iterating over all versions
 
 To iterate over each version, use the `.forEachVersion` helper method.
