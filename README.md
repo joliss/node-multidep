@@ -44,8 +44,8 @@ Next, run
 In this example, it will create `test/multidep` and install broccoli 0.16.3
 and broccoli 1.0.0 somewhere inside the `test/multidep` directory.
 
-To run `multidep` automatically after `npm install`, add it as a "pretest"
-hook to your `package.json`:
+To run `multidep` automatically before your test suite (when you run `npm
+test`), add it as a "pretest" hook to your `package.json`:
 
 ```json
 {
