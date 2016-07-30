@@ -24,7 +24,7 @@ Create a JSON spec of packages to be installed, e.g. at `test/multidep.json`:
 
 ```json
 {
-  "path": "test/multidep",
+  "path": "test/multidep_modules",
   "versions": {
     "broccoli": ["0.16.3", "1.0.0"]
   }
@@ -41,8 +41,9 @@ Next, run
 ./node_modules/.bin/multidep test/multidep.json
 ```
 
-In this example, it will create `test/multidep` and install broccoli 0.16.3
-and broccoli 1.0.0 somewhere inside the `test/multidep` directory.
+In this example, it will create `test/multidep_modules` and install broccoli
+0.16.3 and broccoli 1.0.0 somewhere inside the `test/multidep_modules`
+directory.
 
 To run `multidep` automatically before your test suite (when you run `npm
 test`), add it as a "pretest" hook to your `package.json`:
@@ -57,7 +58,7 @@ test`), add it as a "pretest" hook to your `package.json`:
 ```
 
 `multidep` will not redownload existing packages. If something went wrong,
-delete its directory first: `rm -r test/multidep`
+delete its directory first: `rm -r test/multidep_modules`
 
 ### `multidepRequire`: Requiring specific package versions
 
@@ -93,7 +94,7 @@ presence is detected automatically, without being specified in
 First, symlink your checkout to `<path>/<package>-master`, e.g.
 
 ```bash
-ln -s ~/src/broccoli test/multidep/broccoli-master
+ln -s ~/src/broccoli test/multidep_modules/broccoli-master
 ```
 
 Then, try to `require` it. If it's not present (for example on a CI server),

@@ -114,7 +114,7 @@ function getSpec(specPath) {
   // specPath is relative to cwd, so we need to call realpathSync
   var spec = require(fs.realpathSync(specPath))
   if (!spec || !spec.hasOwnProperty('path') || Array.isArray(spec.versions)) {
-    throw new Error('Invalid version spec; expected { path: "test/multidep", versions: { ... } }, got ' +
+    throw new Error('Invalid version spec; expected { path: "test/multidep_modules", versions: { ... } }, got ' +
       require('util').inspect(spec))
   }
   return spec
