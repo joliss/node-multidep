@@ -1,5 +1,7 @@
 # master
 
+# 2.0.1
+
 * Suggest test/multidep_modules instead of test/multidep
 
 # 2.0.0
