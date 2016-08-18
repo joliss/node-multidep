@@ -33,6 +33,24 @@ Create a JSON spec of packages to be installed, e.g. at `test/multidep.json`:
 
 Do not use fuzzy versions (`"^0.16.0"`) - this will cause problems.
 
+#### Installing the packages from GitHub
+
+To specify a package from GitHub, specify an array where the first value points
+to a GitHub repository (optionally with branch or tag), and the second value
+will be suffixed to the install path. This will install the `somebranch` branch
+of the `username/brocolli` repository to `test/multidep_modules/brocolli-thatbranch`:
+
+```json
+{
+  "path": "test/multidep_modules",
+  "versions": {
+    "broccoli": [["username/brocolli#somebranch", "thatbranch"]]
+  }
+}
+```
+
+This is currently only for installing, does not work with requiring.
+
 ### Installing the packages from npm
 
 Next, run
