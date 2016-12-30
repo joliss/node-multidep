@@ -72,14 +72,39 @@ module.exports.install = function(specPath) {
   Object.keys(spec.versions).sort().forEach(function(packageName) {
     spec.versions[packageName].forEach(function(version) {
       promise = promise.then(function() {
-        var packagePath = path.join(spec.path, packageName + '-' + version)
+        var packagePath
+        // If version is an array, first arg is NPM path and second is alias.
+        if (version.constructor === Array) {
+          packagePath = path.join(spec.path, packageName + '-' + version[1])
+        } else {
+          packagePath = path.join(spec.path, packageName + '-' + version)
+        }
         return RSVP.resolve()
           .then(function() {
             if (!fs.existsSync(packagePath)) {
               console.log(packageName + ' ' + version + ': Installing')
               fs.mkdirSync(packagePath)
               fs.mkdirSync(path.join(packagePath, 'node_modules'))
-              var cp = spawn('npm', ['install', packageName + '@' + version], {
+
+              var installName;
+              // If version is an array, first arg is NPM path and second is alias.
+              if (version.constructor === Array) {
+                installName = version[0]
+              } else {
+                installName = packageName + '@' + version
+              }
+
+              var npmCommand = 'npm';
+              if (process.env.MULTIDEP_NPM_PATH) {
+                var npmCommand = 'node ' + process.env.MULTIDEP_NPM_PATH;
+              }
+              var memoryLimitArg = '';
+              if (process.env.MULTIDEP_MEMORY_LIMIT) {
+                var memoryLimitArg = '--max-old-space-size=' +
+                                     process.env.MULTIDEP_MEMORY_LIMIT;
+              }
+
+              var cp = spawn('npm', ['install', installName, memoryLimitArg], {
                 cwd: packagePath,
                 stdio: 'inherit',
                 timeout: 300
