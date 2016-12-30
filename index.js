@@ -94,7 +94,17 @@ module.exports.install = function(specPath) {
                 installName = packageName + '@' + version
               }
 
-              var cp = spawn('npm', ['install', installName], {
+              var npmCommand = 'npm';
+              if (process.env.MULTIDEP_NPM_PATH) {
+                var npmCommand = 'node ' + process.env.MULTIDEP_NPM_PATH;
+              }
+              var memoryLimitArg = '';
+              if (process.env.MULTIDEP_MEMORY_LIMIT) {
+                var memoryLimitArg = '--max-old-space-size=' +
+                                     process.env.MULTIDEP_MEMORY_LIMIT;
+              }
+
+              var cp = spawn('npm', ['install', installName, memoryLimitArg], {
                 cwd: packagePath,
                 stdio: 'inherit',
                 timeout: 300
