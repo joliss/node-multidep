@@ -1,5 +1,7 @@
 # master
 
+# 2.0.2
+
 * Suppress npm warnings
 
 # 2.0.1
