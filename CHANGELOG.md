@@ -1,5 +1,7 @@
 # master
 
+* Suppress npm warnings
+
 # 2.0.1
 
 * Suggest test/multidep_modules instead of test/multidep

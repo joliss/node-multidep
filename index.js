@@ -78,6 +78,7 @@ module.exports.install = function(specPath) {
             if (!fs.existsSync(packagePath)) {
               console.log(packageName + ' ' + version + ': Installing')
               fs.mkdirSync(packagePath)
+              fs.writeFileSync(packagePath + '/package.json', '{"name":"multidep-dummy","private":true,"description":"multidep-dummy","repository":"http://example.com","license":"MIT"}')
               fs.mkdirSync(path.join(packagePath, 'node_modules'))
               var cp = spawn('npm', ['install', packageName + '@' + version], {
                 cwd: packagePath,
