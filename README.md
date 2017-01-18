@@ -10,6 +10,11 @@ var broccoli1 = multidepRequire('broccoli', '1.0.0');
 This is useful for integration testing. It's perhaps not robust enough for
 production code.
 
+See Also: The [dynavers](https://github.com/numical/dynavers) tool is based on
+this library. Whereas `multidep` provides an explicit `multidepRequire` call,
+`dynavers` monkey-patches Node's `require` mechanism, so that `require` calls
+*from anywhere* will use the package version you specify.
+
 ## Installation
 
 ```bash
