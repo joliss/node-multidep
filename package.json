@@ -20,6 +20,7 @@
     "testing"
   ],
   "dependencies": {
+    "mkdirp": "^0.5.1",
     "rimraf": "^2.4.3",
     "rsvp": "^3.1.0",
     "spawn-cmd": "0.0.2"

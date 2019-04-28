@@ -2,6 +2,7 @@
 
 var fs = require('fs')
 var path = require('path')
+var mkdirp = require('mkdirp')
 var spawn = require('spawn-cmd').spawn
 var RSVP = require('rsvp')
 var rimraf = require('rimraf')
@@ -77,9 +78,8 @@ module.exports.install = function(specPath) {
           .then(function() {
             if (!fs.existsSync(packagePath)) {
               console.log(packageName + ' ' + version + ': Installing')
-              fs.mkdirSync(packagePath)
+              mkdirp.sync(path.join(packagePath, 'node_modules'))
               fs.writeFileSync(packagePath + '/package.json', '{"name":"multidep-dummy","private":true,"description":"multidep-dummy","repository":"http://example.com","license":"MIT"}')
-              fs.mkdirSync(path.join(packagePath, 'node_modules'))
               var cp = spawn('npm', ['install', packageName + '@' + version], {
                 cwd: packagePath,
                 stdio: 'inherit',
